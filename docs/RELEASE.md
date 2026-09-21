@@ -33,6 +33,11 @@ maintainers should run before publishing anything.
 - Start from a clean checkout or an isolated release worktree.
 - Confirm the version in `package.json` and the Cargo workspace metadata is the
   release candidate you intend to publish.
+- After a version bump, regenerate `package-lock.json` with the Node 24
+  maintainer toolchain and verify `npm ci` in a clean checkout. Keep npm's
+  `{ "optional": true }` entries for binding versions that are not published
+  yet: deleting them makes `npm ci` reject the lockfile before any build runs.
+  Do not substitute an older binding version just to satisfy installation.
 - Wait for the normal CI matrix to pass on Linux, macOS, and Windows before
   starting the release checklist.
 
